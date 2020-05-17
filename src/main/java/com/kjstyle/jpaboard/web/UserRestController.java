@@ -1,16 +1,17 @@
 package com.kjstyle.jpaboard.web;
 
 import com.kjstyle.jpaboard.domain.user.User;
+import com.kjstyle.jpaboard.service.PaginationParam;
 import com.kjstyle.jpaboard.service.UserService;
+import com.kjstyle.jpaboard.web.dto.ListResponse;
 import com.kjstyle.jpaboard.web.dto.UserSaveReqDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * UserRestController
@@ -38,8 +39,28 @@ public class UserRestController extends BaseRestController {
      * @param pageable
      * @return
      */
-    @GetMapping("/users")
+    @GetMapping("/users/pageable")
     public Page<User> list(@PageableDefault Pageable pageable) {
-        return userService.findAll(pageable);
+        return userService.findAllWithPage(pageable);
+    }
+
+
+    /**
+     * 사용자 리스트 (bootgrid용)
+     * http://www.jquery-bootgrid.com/Examples#basic
+     *
+     * @param paginationParam
+     * @return
+     */
+    @PostMapping("/users/bootgrid")
+    public ListResponse<User> list4BootGrid() {
+        PaginationParam paginationParam = new PaginationParam(10, 10, "asc");
+        List<User> userList = userService.findAll(paginationParam);
+        return ListResponse.<User>builder()
+                .rows(userList)
+                .current(paginationParam.getCurrent())
+                .rowCount(paginationParam.getRowCount())
+                .totalCount(1000)
+                .build();
     }
 }

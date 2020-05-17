@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * UserService
  */
@@ -33,7 +35,17 @@ public class UserService {
      * @param pageable
      * @return
      */
-    public Page<User> findAll(Pageable pageable) {
+    public Page<User> findAllWithPage(Pageable pageable) {
         return userRepository.findAll(pageable);
+    }
+
+    /**
+     * 사용자 리스트 (pageable)
+     * @param paginationParam
+     * @return
+     */
+    public List<User> findAll(PaginationParam paginationParam) {
+        // searchFilter 에 대한 파라미터 분해 처리
+        return userRepository.findAll();
     }
 }

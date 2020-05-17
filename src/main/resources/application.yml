@@ -14,3 +14,10 @@ spring:
   h2:
     console:
       enabled: true
+
+  thymeleaf:
+    cache: false
+    mode: HTML5
+    prefix: classpath:templates/
+    suffix: .html
+    check-template-location: true
