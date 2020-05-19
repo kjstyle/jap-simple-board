@@ -9,7 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 
@@ -44,6 +46,10 @@ public class UserRestController extends BaseRestController {
         return userService.findAllWithPage(pageable);
     }
 
+    @GetMapping("/users/{id}")
+    public User getUserById(@PathVariable("id") Long id) {
+        return userService.findById(id).orElseThrow(() -> new HttpClientErrorException(HttpStatus.BAD_REQUEST));
+    }
 
     /**
      * 사용자 리스트 (bootgrid용)

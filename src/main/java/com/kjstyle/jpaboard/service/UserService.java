@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * UserService
@@ -41,11 +42,16 @@ public class UserService {
 
     /**
      * 사용자 리스트 (pageable)
+     *
      * @param paginationParam
      * @return
      */
     public List<User> findAll(PaginationParam paginationParam) {
         // searchFilter 에 대한 파라미터 분해 처리
         return userRepository.findAll();
+    }
+
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
     }
 }

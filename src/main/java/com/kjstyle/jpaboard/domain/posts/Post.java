@@ -1,6 +1,7 @@
 package com.kjstyle.jpaboard.domain.posts;
 
 import com.kjstyle.jpaboard.domain.BaseTimeEntity;
+import com.kjstyle.jpaboard.domain.board.Board;
 import com.kjstyle.jpaboard.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,6 +22,10 @@ public class Post extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_no")
     private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "board_no")
+    private Board board;
 
     @Column(nullable = false, length = 100)
     private String title;
