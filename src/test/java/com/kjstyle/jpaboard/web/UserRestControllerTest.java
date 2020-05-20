@@ -1,14 +1,20 @@
 package com.kjstyle.jpaboard.web;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -19,6 +25,18 @@ class UserRestControllerTest {
 
     @Autowired
     protected MockMvc mockMvc;
+
+    @Autowired
+    private WebApplicationContext ctx;
+
+    @BeforeEach
+    public void setup() {
+        // 한글 깨짐 방지 처리
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx)
+                .addFilters(new CharacterEncodingFilter("UTF-8", true))  // 필터 추가
+                .alwaysDo(print())
+                .build();
+    }
 
     @Test
     public void 회원조회() throws Exception {
@@ -34,10 +52,10 @@ class UserRestControllerTest {
             "email": "111"
         }
          */
-        mockMvc.perform(get("/api/users/1"))
+        mockMvc.perform(get("/api/users/1").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id").value(1L))
+                .andDo(print());
         ;
     }
-
 }
