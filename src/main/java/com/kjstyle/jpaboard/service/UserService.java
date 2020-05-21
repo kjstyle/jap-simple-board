@@ -2,7 +2,7 @@ package com.kjstyle.jpaboard.service;
 
 import com.kjstyle.jpaboard.domain.user.User;
 import com.kjstyle.jpaboard.domain.user.UserRepository;
-import com.kjstyle.jpaboard.web.dto.UserSaveReqDto;
+import com.kjstyle.jpaboard.web.dto.UserCreateReqDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,12 +23,13 @@ public class UserService {
 
     /**
      * 사용자 등록 처리
-     * @param userSaveReqDto
+     *
+     * @param userCreateReqDto
      * @return
      */
     @Transactional
-    public Long save(UserSaveReqDto userSaveReqDto) {
-        return userRepository.save(userSaveReqDto.toEntity()).getId();
+    public Long save(UserCreateReqDto userCreateReqDto) {
+        return userRepository.save(userCreateReqDto.toEntity()).getId();
     }
 
     /**

@@ -11,6 +11,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class HelloControllerTest {
+
     @Autowired
     private TestRestTemplate restTemplate;
 
@@ -21,6 +22,5 @@ class HelloControllerTest {
 
         // then
         Assertions.assertEquals("hello world", actual);
-
     }
 }

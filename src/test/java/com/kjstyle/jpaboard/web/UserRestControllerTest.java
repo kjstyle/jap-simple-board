@@ -49,12 +49,15 @@ class UserRestControllerTest {
             "id": 1,
             "userId": "kj",
             "name": "이길주",
-            "email": "111"
+            "email": "kjstyle79@naver.com"
         }
          */
         mockMvc.perform(get("/api/users/1").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id").value(1L))
+                .andExpect(jsonPath("userId").value("kj"))
+                .andExpect(jsonPath("name").value("이길주"))
+                .andExpect(jsonPath("email").value("kjstyle79@naver.com"))
                 .andDo(print());
         ;
     }

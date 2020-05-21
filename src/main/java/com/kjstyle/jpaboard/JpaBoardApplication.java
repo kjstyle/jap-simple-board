@@ -20,8 +20,8 @@ public class JpaBoardApplication {
     @Bean
     public CommandLineRunner initData(UserRepository repository) {
         return (args) -> {
-            repository.save(User.builder().userId("kj").email("111").name("이길주").build());
-            repository.save(User.builder().userId("ejoin").email("222").name("이어진").build());
+            repository.save(User.builder().userId("kj").email("kjstyle79@naver.com").name("이길주").build());
+            repository.save(User.builder().userId("ejoin312").email("eojin312@naver.com").name("이어진").build());
         };
     }
 }
