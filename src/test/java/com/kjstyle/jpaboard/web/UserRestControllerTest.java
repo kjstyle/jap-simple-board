@@ -1,5 +1,7 @@
 package com.kjstyle.jpaboard.web;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kjstyle.jpaboard.web.dto.UserCreateReqDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,9 +16,9 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc // Junit5에서는 이 어노테이션이 있어야 MockMvc주입에 문제가 안생김 (출처 : https://gofnrk.tistory.com/74)
@@ -28,6 +30,9 @@ class UserRestControllerTest {
 
     @Autowired
     private WebApplicationContext ctx;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @BeforeEach
     public void setup() {
@@ -59,6 +64,27 @@ class UserRestControllerTest {
                 .andExpect(jsonPath("name").value("이길주"))
                 .andExpect(jsonPath("email").value("kjstyle79@naver.com"))
                 .andDo(print());
+        ;
+    }
+
+    @Test
+    public void 회원신규등록API테스트() throws Exception {
+        String content = objectMapper.writeValueAsString(
+                UserCreateReqDto.builder()
+                        .userId("kjstyle2")
+                        .name("이길주2")
+                        .email("kjstyle99@naver.com")
+                        .build()
+        );
+
+        mockMvc.perform(
+                post("/api/users")
+                        .content(content)
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().string("3"))
+                .andDo(print())
         ;
     }
 }

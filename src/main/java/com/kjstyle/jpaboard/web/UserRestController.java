@@ -40,6 +40,18 @@ public class UserRestController extends BaseRestController {
     }
 
     /**
+     * 사용자 정보수정
+     *
+     * @param userCreateReqDto
+     * @return
+     */
+    @ApiOperation("회원 등록")
+    @PutMapping("/users")
+    public Long update(@RequestBody UserCreateReqDto userCreateReqDto) {
+        return userService.save(userCreateReqDto);
+    }
+
+    /**
      * 사용자 리스트 (pageable)
      *
      * @param pageable
