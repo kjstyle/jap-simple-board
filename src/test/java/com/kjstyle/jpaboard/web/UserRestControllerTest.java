@@ -2,6 +2,7 @@ package com.kjstyle.jpaboard.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kjstyle.jpaboard.web.dto.UserCreateReqDto;
+import com.kjstyle.jpaboard.web.dto.UserUpdateReqDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,8 +16,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -82,9 +82,32 @@ class UserRestControllerTest {
                         .content(content)
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().string("3"))
                 .andDo(print())
         ;
+    }
+
+    @Test
+    public void 회원정보변경API테스트() throws Exception {
+        String content = objectMapper.writeValueAsString(
+                UserUpdateReqDto.builder()
+                        .userNo(1L)
+                        .userId("kjstyle-1")
+                        .name("이길주-1")
+                        .email("kjstyle-1@naver.com")
+                        .build()
+        );
+
+        mockMvc.perform(
+                put("/api/users")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content)
+        ).andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("userId").value("kjstyle-1"))
+                .andExpect(jsonPath("name").value("이길주-1"))
+                .andExpect(jsonPath("email").value("kjstyle-1@naver.com"))
+                .andDo(print());
+
     }
 }

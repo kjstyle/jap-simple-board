@@ -5,6 +5,7 @@ import com.kjstyle.jpaboard.service.PaginationParam;
 import com.kjstyle.jpaboard.service.UserService;
 import com.kjstyle.jpaboard.web.dto.ListResponse;
 import com.kjstyle.jpaboard.web.dto.UserCreateReqDto;
+import com.kjstyle.jpaboard.web.dto.UserUpdateReqDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -42,13 +43,13 @@ public class UserRestController extends BaseRestController {
     /**
      * 사용자 정보수정
      *
-     * @param userCreateReqDto
+     * @param userUpdateReqDto
      * @return
      */
     @ApiOperation("회원 등록")
     @PutMapping("/users")
-    public Long update(@RequestBody UserCreateReqDto userCreateReqDto) {
-        return userService.save(userCreateReqDto);
+    public User update(@RequestBody UserUpdateReqDto userUpdateReqDto) {
+        return userService.save(userUpdateReqDto);
     }
 
     /**
