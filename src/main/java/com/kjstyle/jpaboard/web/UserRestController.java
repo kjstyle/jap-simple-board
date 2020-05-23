@@ -50,6 +50,12 @@ public class UserRestController extends BaseRestController {
         return UserDto.toDto(user);
     }
 
+    /**
+     * 사용자 단건 조회 byId
+     *
+     * @param id
+     * @return
+     */
     @ApiOperation("사용자 단건 조회 byId")
     @GetMapping("/users/{id}")
     public UserDto getUserById(@PathVariable("id") Long id) {
@@ -57,6 +63,18 @@ public class UserRestController extends BaseRestController {
                 -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "존재하지 않는 회원입니다.") // ResponseStatusException since spring 5.0
         );
         return UserDto.toDto(user);
+    }
+
+    /**
+     * 사용자 삭제
+     *
+     * @param id
+     * @return 삭제된 회원의 id(userNo)
+     */
+    @ApiOperation("회원 정보 변경")
+    @DeleteMapping("/users/{id}")
+    public Long delete(@PathVariable("id") Long id) {
+        return userService.delete(id);
     }
 
     /**

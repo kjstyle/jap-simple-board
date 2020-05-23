@@ -37,11 +37,14 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false, unique = true)
     private String email;
 
+    private boolean isDeleted;
+
     @Builder
     public User(String userId, String name, String email) {
         this.userId = userId;
         this.name = name;
         this.email = email;
+        this.isDeleted = false;
     }
 
     @Builder
@@ -50,5 +53,10 @@ public class User extends BaseTimeEntity {
         this.userId = userId;
         this.name = name;
         this.email = email;
+        this.isDeleted = false;
+    }
+
+    public void deleted() {
+        this.isDeleted = true;
     }
 }

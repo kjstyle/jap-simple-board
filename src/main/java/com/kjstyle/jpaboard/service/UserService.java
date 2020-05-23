@@ -7,8 +7,10 @@ import com.kjstyle.jpaboard.web.dto.UserUpdateReqDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -65,7 +67,21 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> findById(Long id) {
+    public Optional<User> findById(long id) {
         return userRepository.findById(id);
+    }
+
+    /**
+     * 회원삭제 시 삭제여부를 true로 변경
+     *
+     * @param id
+     * @return
+     */
+    @Transactional
+    public Long delete(long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "존재하지 않는 회원입니다."));
+        user.deleted();
+        return userRepository.save(user).getId();
     }
 }
