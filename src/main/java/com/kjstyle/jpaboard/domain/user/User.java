@@ -1,12 +1,15 @@
 package com.kjstyle.jpaboard.domain.user;
 
 import com.kjstyle.jpaboard.domain.BaseTimeEntity;
+import com.kjstyle.jpaboard.domain.posts.Post;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -18,6 +21,9 @@ public class User extends BaseTimeEntity {
     @Column(name = "user_no")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts = new ArrayList<>();
 
     @ApiModelProperty(value = "회원아이디", allowEmptyValue = false)
     @Column(nullable = false, unique = true)

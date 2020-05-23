@@ -1,10 +1,9 @@
 package com.kjstyle.jpaboard.web;
 
 import com.kjstyle.jpaboard.domain.user.User;
-import com.kjstyle.jpaboard.service.PaginationParam;
 import com.kjstyle.jpaboard.service.UserService;
-import com.kjstyle.jpaboard.web.dto.ListResponse;
 import com.kjstyle.jpaboard.web.dto.UserCreateReqDto;
+import com.kjstyle.jpaboard.web.dto.UserDto;
 import com.kjstyle.jpaboard.web.dto.UserUpdateReqDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,8 +14,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
 
 /**
  * UserRestController
@@ -46,10 +43,20 @@ public class UserRestController extends BaseRestController {
      * @param userUpdateReqDto
      * @return
      */
-    @ApiOperation("회원 등록")
+    @ApiOperation("회원 정보 변경")
     @PutMapping("/users")
-    public User update(@RequestBody UserUpdateReqDto userUpdateReqDto) {
-        return userService.save(userUpdateReqDto);
+    public UserDto update(@RequestBody UserUpdateReqDto userUpdateReqDto) {
+        User user = userService.save(userUpdateReqDto);
+        return UserDto.toDto(user);
+    }
+
+    @ApiOperation("사용자 단건 조회 byId")
+    @GetMapping("/users/{id}")
+    public UserDto getUserById(@PathVariable("id") Long id) {
+        User user = userService.findById(id).orElseThrow(()
+                -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "존재하지 않는 회원입니다.") // ResponseStatusException since spring 5.0
+        );
+        return UserDto.toDto(user);
     }
 
     /**
@@ -64,29 +71,5 @@ public class UserRestController extends BaseRestController {
         return userService.findAllWithPage(pageable);
     }
 
-    @ApiOperation("사용자 단건 조회 byId")
-    @GetMapping("/users/{id}")
-    public User getUserById(@PathVariable("id") Long id) {
-        return userService.findById(id).orElseThrow(()
-                -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "존재하지 않는 회원입니다.") // ResponseStatusException since spring 5.0
-        );
-    }
 
-    /**
-     * 사용자 리스트 (bootgrid용)
-     * http://www.jquery-bootgrid.com/Examples#basic
-     *
-     * @return
-     */
-    @PostMapping("/users.bootgrid")
-    public ListResponse<User> list4BootGrid() {
-        PaginationParam paginationParam = new PaginationParam(10, 10, "asc");
-        List<User> userList = userService.findAll(paginationParam);
-        return ListResponse.<User>builder()
-                .rows(userList)
-                .current(paginationParam.getCurrent())
-                .rowCount(paginationParam.getRowCount())
-                .totalCount(1000)
-                .build();
-    }
 }

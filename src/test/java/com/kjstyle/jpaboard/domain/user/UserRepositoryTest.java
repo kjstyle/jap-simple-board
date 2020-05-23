@@ -12,7 +12,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @SpringBootTest
 public class UserRepositoryTest {
 
-    public static final String TEST_USER_ID = "kjstyle";
+    public static final String TEST_USER_ID = "kjstyle-test01";
+    public static final String TEST_EMAIL = "kjstyle-test01@naver.com";
 
     @Autowired
     private UserRepository userRepository;
@@ -20,7 +21,7 @@ public class UserRepositoryTest {
     @Test
     public void 사용자_인서트_테스트() {
         // given
-        User user = User.builder().userId(TEST_USER_ID).name("이길주").email("kjstyle79@naver.com").build();
+        User user = User.builder().userId(TEST_USER_ID).name("이길주").email(TEST_EMAIL).build();
         userRepository.save(user);
 
         // when
@@ -28,6 +29,7 @@ public class UserRepositoryTest {
 
         // then
         Assertions.assertEquals(kj.getUserId(), TEST_USER_ID);
+        Assertions.assertEquals(kj.getEmail(), TEST_EMAIL);
         Assertions.assertNotNull(kj.getCreatedDate());
     }
 }

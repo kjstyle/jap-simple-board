@@ -22,14 +22,10 @@ class PostRepositoryTest {
     private UserRepository userRepository;
 
     @Test
-    public void 게시글_인서트_테스트() {
+    public void 게시글_인서트_테스트() throws Exception {
 
         // given and when
-        User user = userRepository.save(User.builder()
-                .userId("kjstyle")
-                .name("이길주")
-                .email("kjstyle79@naver.com")
-                .build());
+        User user = userRepository.findById(1L).orElseThrow(() -> new Exception());
 
         Post post = postRepository.save(Post.builder()
                 .title(TEST_TITLE)
