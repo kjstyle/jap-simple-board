@@ -3,7 +3,7 @@ package com.kjstyle.jpaboard.web;
 import com.kjstyle.jpaboard.domain.user.User;
 import com.kjstyle.jpaboard.service.UserService;
 import com.kjstyle.jpaboard.web.dto.UserCreateReqDto;
-import com.kjstyle.jpaboard.web.dto.UserDto;
+import com.kjstyle.jpaboard.web.dto.UserResDto;
 import com.kjstyle.jpaboard.web.dto.UserUpdateReqDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -45,9 +45,9 @@ public class UserRestController extends BaseRestController {
      */
     @ApiOperation("회원 정보 변경")
     @PutMapping("/users")
-    public UserDto update(@RequestBody UserUpdateReqDto userUpdateReqDto) {
+    public UserResDto update(@RequestBody UserUpdateReqDto userUpdateReqDto) {
         User user = userService.save(userUpdateReqDto);
-        return UserDto.toDto(user);
+        return UserResDto.toDto(user);
     }
 
     /**
@@ -58,11 +58,11 @@ public class UserRestController extends BaseRestController {
      */
     @ApiOperation("사용자 단건 조회 byId")
     @GetMapping("/users/{id}")
-    public UserDto getUserById(@PathVariable("id") Long id) {
+    public UserResDto getUserById(@PathVariable("id") Long id) {
         User user = userService.findById(id).orElseThrow(()
                 -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "존재하지 않는 회원입니다.") // ResponseStatusException since spring 5.0
         );
-        return UserDto.toDto(user);
+        return UserResDto.toDto(user);
     }
 
     /**

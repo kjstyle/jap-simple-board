@@ -5,6 +5,11 @@ import lombok.Getter;
 
 import java.util.List;
 
+/**
+ * 공용 리스트 응답 DTO wrapper
+ *
+ * @param <T>
+ */
 @Getter
 public class ListResponse<T> {
     private int current;
