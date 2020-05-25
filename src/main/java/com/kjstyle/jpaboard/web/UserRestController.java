@@ -15,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
+
 /**
  * UserRestController
  */
@@ -33,7 +35,7 @@ public class UserRestController extends BaseRestController {
      */
     @ApiOperation("회원 등록")
     @PostMapping("/users")
-    public Long create(@RequestBody UserCreateReqDto userCreateReqDto) {
+    public Long create(@RequestBody @Valid UserCreateReqDto userCreateReqDto) {
         return userService.save(userCreateReqDto);
     }
 
@@ -45,7 +47,7 @@ public class UserRestController extends BaseRestController {
      */
     @ApiOperation("회원 정보 변경")
     @PutMapping("/users")
-    public UserResDto update(@RequestBody UserUpdateReqDto userUpdateReqDto) {
+    public UserResDto update(@RequestBody @Valid UserUpdateReqDto userUpdateReqDto) {
         User user = userService.save(userUpdateReqDto);
         return UserResDto.toDto(user);
     }
@@ -88,6 +90,5 @@ public class UserRestController extends BaseRestController {
     public Page<User> list(@PageableDefault Pageable pageable) {
         return userService.findAllWithPage(pageable);
     }
-
 
 }

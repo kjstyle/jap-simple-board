@@ -6,21 +6,31 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.*;
+
 /**
  * 회원정보 변경용 DTO
  */
 @Getter
 @NoArgsConstructor
 public class UserUpdateReqDto {
+
+    @NotNull
+    @Min(1)
     @ApiModelProperty(value = "회원키", allowEmptyValue = false)
     private Long userNo;
 
+    @NotBlank(message = "회원 아이디를 입력해주세요.")
+    @Size(min = 5, max = 30)
     @ApiModelProperty(value = "회원 아이디", allowEmptyValue = false)
     private String userId;
 
+    @NotBlank(message = "회원 이름를 입력해주세요.")
     @ApiModelProperty(value = "회원 이름", allowEmptyValue = false)
     private String name;
 
+    @NotBlank(message = "회원 이메일을 입력해주세요.")
+    @Email(message = "이메일 양식을 지켜주세요")
     @ApiModelProperty(value = "회원 이메일", allowEmptyValue = false)
     private String email;
 

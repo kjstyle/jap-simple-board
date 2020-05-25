@@ -6,6 +6,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 /**
  * 회원생성 DTO
  */
@@ -13,12 +17,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserCreateReqDto {
 
+    @NotBlank(message = "회원 아이디를 입력해주세요.")
+    @Size(min = 5, max = 30)
     @ApiModelProperty(value = "회원 아이디", allowEmptyValue = false)
     private String userId;
 
-    @ApiModelProperty(value = "회원 명", allowEmptyValue = false)
+    @NotBlank(message = "회원 이름를 입력해주세요.")
+    @ApiModelProperty(value = "회원 이름", allowEmptyValue = false)
     private String name;
 
+    @NotBlank(message = "회원 이메일을 입력해주세요.")
+    @Email(message = "이메일 양식을 지켜주세요")
     @ApiModelProperty(value = "회원 이메일", allowEmptyValue = false)
     private String email;
 

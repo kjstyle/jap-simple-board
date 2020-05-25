@@ -88,6 +88,45 @@ class UserRestControllerTest {
     }
 
     @Test
+    public void 회원신규등록API_유효성체크_짧은_ID_테스트() throws Exception {
+        String content = objectMapper.writeValueAsString(
+                UserCreateReqDto.builder()
+                        .userId("kj")
+                        .name("이길주")
+                        .email("kj-id-test@naver.com")
+                        .build()
+        );
+
+        mockMvc.perform(
+                post("/api/users")
+                        .content(content)
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isBadRequest())
+                .andDo(print())
+        ;
+    }
+
+
+    @Test
+    public void 회원신규등록API_유효성체크_비정상이메일_테스트() throws Exception {
+        String content = objectMapper.writeValueAsString(
+                UserCreateReqDto.builder()
+                        .userId("kjstyle-invalid-email")
+                        .name("이길주")
+                        .email("kj-invalid-email")
+                        .build()
+        );
+
+        mockMvc.perform(
+                post("/api/users")
+                        .content(content)
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isBadRequest())
+                .andDo(print())
+        ;
+    }
+
+    @Test
     public void 회원정보변경API테스트() throws Exception {
         String content = objectMapper.writeValueAsString(
                 UserUpdateReqDto.builder()
@@ -107,6 +146,27 @@ class UserRestControllerTest {
                 .andExpect(jsonPath("userId").value("kjstyle-1"))
                 .andExpect(jsonPath("name").value("이길주-1"))
                 .andExpect(jsonPath("email").value("kjstyle-1@naver.com"))
+                .andDo(print());
+
+    }
+
+
+    @Test
+    public void 회원정보변경API_비정상이메일_테스트() throws Exception {
+        String content = objectMapper.writeValueAsString(
+                UserUpdateReqDto.builder()
+                        .userNo(1L)
+                        .userId("kjstyle")
+                        .name("이길주")
+                        .email("kjstyle-invalid-email")
+                        .build()
+        );
+
+        mockMvc.perform(
+                put("/api/users")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content)
+        ).andExpect(status().isBadRequest())
                 .andDo(print());
 
     }
