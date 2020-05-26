@@ -84,4 +84,8 @@ public class UserService {
         user.deleted();
         return userRepository.save(user).getId();
     }
+
+    public Page<User> findAllNameLike(String name, Pageable pageable) {
+        return userRepository.findUsersByNameContains(name, pageable);
+    }
 }

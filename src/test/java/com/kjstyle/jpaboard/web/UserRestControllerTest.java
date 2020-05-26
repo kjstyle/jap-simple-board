@@ -168,6 +168,15 @@ class UserRestControllerTest {
                         .content(content)
         ).andExpect(status().isBadRequest())
                 .andDo(print());
+    }
 
+    @Test
+    public void 회원이름으로회원조회테스트() throws Exception {
+        mockMvc.perform(
+                get("/api/users").contentType(MediaType.APPLICATION_JSON)
+                        .queryParam("name", "길주")
+        ).andExpect(status().isOk())
+                .andDo(print())
+        ;
     }
 }

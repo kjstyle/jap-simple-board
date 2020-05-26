@@ -91,4 +91,17 @@ public class UserRestController extends BaseRestController {
         return userService.findAllWithPage(pageable);
     }
 
+
+    /**
+     * 사용자 목록 조회 (이름 LIKE검색 가능)
+     *
+     * @param name
+     * @param pageable
+     * @return
+     */
+    @ApiOperation("사용자 목록 조회 by pageable")
+    @GetMapping("/users")
+    public Page<User> list(@RequestParam("name") String name, @PageableDefault Pageable pageable) {
+        return userService.findAllNameLike(name, pageable);
+    }
 }
