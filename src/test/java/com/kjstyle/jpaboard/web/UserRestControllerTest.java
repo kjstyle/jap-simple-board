@@ -176,6 +176,7 @@ class UserRestControllerTest {
                 get("/api/users").contentType(MediaType.APPLICATION_JSON)
                         .queryParam("name", "길주")
         ).andExpect(status().isOk())
+                .andExpect(jsonPath("$.content[0].name").value("이길주"))
                 .andDo(print())
         ;
     }

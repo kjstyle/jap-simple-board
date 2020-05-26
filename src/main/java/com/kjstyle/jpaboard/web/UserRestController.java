@@ -94,7 +94,6 @@ public class UserRestController extends BaseRestController {
 
     /**
      * 사용자 목록 조회 (이름 LIKE검색 가능)
-     *
      * @param name
      * @param pageable
      * @return
