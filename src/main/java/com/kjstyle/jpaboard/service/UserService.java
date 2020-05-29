@@ -2,8 +2,7 @@ package com.kjstyle.jpaboard.service;
 
 import com.kjstyle.jpaboard.domain.user.User;
 import com.kjstyle.jpaboard.domain.user.UserRepository;
-import com.kjstyle.jpaboard.web.dto.UserCreateReqDto;
-import com.kjstyle.jpaboard.web.dto.UserUpdateReqDto;
+import com.kjstyle.jpaboard.web.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,23 +26,23 @@ public class UserService {
     /**
      * 회원 생성 처리
      *
-     * @param userCreateReqDto
+     * @param userDtoCreate
      * @return
      */
     @Transactional
-    public Long save(UserCreateReqDto userCreateReqDto) {
-        return userRepository.save(userCreateReqDto.toEntity()).getId();
+    public Long save(UserDto.Create userDtoCreate) {
+        return userRepository.save(userDtoCreate.toEntity()).getId();
     }
 
     /**
      * 회원 정보 변경 처리
      *
-     * @param userUpdateReqDto
+     * @param userDtoUpdate
      * @return
      */
     @Transactional
-    public User save(UserUpdateReqDto userUpdateReqDto) {
-        return userRepository.save(userUpdateReqDto.toEntity());
+    public User save(UserDto.Update userDtoUpdate) {
+        return userRepository.save(userDtoUpdate.toEntity());
     }
 
     /**

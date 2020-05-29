@@ -2,9 +2,7 @@ package com.kjstyle.jpaboard.web;
 
 import com.kjstyle.jpaboard.domain.user.User;
 import com.kjstyle.jpaboard.service.UserService;
-import com.kjstyle.jpaboard.web.dto.UserCreateReqDto;
-import com.kjstyle.jpaboard.web.dto.UserResDto;
-import com.kjstyle.jpaboard.web.dto.UserUpdateReqDto;
+import com.kjstyle.jpaboard.web.dto.UserDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -30,26 +28,25 @@ public class UserRestController extends BaseRestController {
     /**
      * 사용자 등록
      *
-     * @param userCreateReqDto
+     * @param userDtoCreate
      * @return
      */
     @ApiOperation("회원 등록")
     @PostMapping("/users")
-    public Long create(@RequestBody @Valid UserCreateReqDto userCreateReqDto) {
-        return userService.save(userCreateReqDto);
+    public Long create(@RequestBody @Valid UserDto.Create userDtoCreate) {
+        return userService.save(userDtoCreate);
     }
 
     /**
      * 사용자 정보수정
      *
-     * @param userUpdateReqDto
+     * @param userDtoUpdate
      * @return
      */
     @ApiOperation("회원 정보 변경")
     @PutMapping("/users")
-    public UserResDto update(@RequestBody @Valid UserUpdateReqDto userUpdateReqDto) {
-        User user = userService.save(userUpdateReqDto);
-        return UserResDto.toDto(user);
+    public User update(@RequestBody @Valid UserDto.Update userDtoUpdate) {
+        return userService.save(userDtoUpdate);
     }
 
     /**
@@ -60,11 +57,10 @@ public class UserRestController extends BaseRestController {
      */
     @ApiOperation("사용자 단건 조회 byId")
     @GetMapping("/users/{id}")
-    public UserResDto getUserById(@PathVariable("id") Long id) {
-        User user = userService.findById(id).orElseThrow(()
+    public User getUserById(@PathVariable("id") Long id) {
+        return userService.findById(id).orElseThrow(()
                 -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "존재하지 않는 회원입니다.") // ResponseStatusException since spring 5.0
         );
-        return UserResDto.toDto(user);
     }
 
     /**

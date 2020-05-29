@@ -1,5 +1,6 @@
 package com.kjstyle.jpaboard.domain.user;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.kjstyle.jpaboard.domain.BaseTimeEntity;
 import com.kjstyle.jpaboard.domain.posts.Post;
 import io.swagger.annotations.ApiModelProperty;
@@ -19,6 +20,7 @@ public class User extends BaseTimeEntity {
     @Id
     @ApiModelProperty(value = "회원키", allowEmptyValue = false)
     @Column(name = "user_no")
+    @JsonProperty("userNo")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

@@ -1,8 +1,7 @@
 package com.kjstyle.jpaboard.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kjstyle.jpaboard.web.dto.UserCreateReqDto;
-import com.kjstyle.jpaboard.web.dto.UserUpdateReqDto;
+import com.kjstyle.jpaboard.web.dto.UserDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -70,7 +69,7 @@ class UserRestControllerTest {
     @Test
     public void 회원신규등록API테스트() throws Exception {
         String content = objectMapper.writeValueAsString(
-                UserCreateReqDto.builder()
+                UserDto.Create.builder()
                         .userId("kjstyle2")
                         .name("이길주2")
                         .email("kjstyle99@naver.com")
@@ -90,7 +89,7 @@ class UserRestControllerTest {
     @Test
     public void 회원신규등록API_유효성체크_짧은_ID_테스트() throws Exception {
         String content = objectMapper.writeValueAsString(
-                UserCreateReqDto.builder()
+                UserDto.Create.builder()
                         .userId("kj")
                         .name("이길주")
                         .email("kj-id-test@naver.com")
@@ -110,7 +109,7 @@ class UserRestControllerTest {
     @Test
     public void 회원신규등록API_유효성체크_비정상이메일_테스트() throws Exception {
         String content = objectMapper.writeValueAsString(
-                UserCreateReqDto.builder()
+                UserDto.Create.builder()
                         .userId("kjstyle-invalid-email")
                         .name("이길주")
                         .email("kj-invalid-email")
@@ -129,7 +128,7 @@ class UserRestControllerTest {
     @Test
     public void 회원정보변경API테스트() throws Exception {
         String content = objectMapper.writeValueAsString(
-                UserUpdateReqDto.builder()
+                UserDto.Update.builder()
                         .userNo(1L)
                         .userId("kjstyle-1")
                         .name("이길주-1")
@@ -154,7 +153,7 @@ class UserRestControllerTest {
     @Test
     public void 회원정보변경API_비정상이메일_테스트() throws Exception {
         String content = objectMapper.writeValueAsString(
-                UserUpdateReqDto.builder()
+                UserDto.Update.builder()
                         .userNo(1L)
                         .userId("kjstyle")
                         .name("이길주")
