@@ -50,7 +50,7 @@ public class UserDto {
         private Long userNo;
 
         @NotBlank(message = "회원 아이디를 입력해주세요.")
-        @Size(min = 5, max = 30)
+        @Size(min = 5, max = 30, message = "아이디는 5자 이상 30자 이하만 가능합니다.")
         @ApiModelProperty(value = "회원 아이디", allowEmptyValue = false)
         private String userId;
 

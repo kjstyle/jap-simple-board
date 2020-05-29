@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -63,6 +64,35 @@ class UserRestControllerTest {
                 .andExpect(jsonPath("name").value("이길주"))
                 .andExpect(jsonPath("email").value("kjstyle79@naver.com"))
                 .andDo(print());
+        ;
+    }
+
+    @Test
+    public void 없는회원조회테스트() throws Exception {
+        /*
+        /api/users/0
+        {
+          "timestamp": "2020-05-29T15:14:59.942+0000",
+          "status": 400,
+          "error": "Bad Request",
+          "message": "존재하지 않는 회원입니다.",
+          "path": "/api/users/0"
+        }
+
+        // 아래는 로그에 찍힌 MockHttpServletResponse
+        MockHttpServletResponse:
+               Status = 400
+        Error message = 존재하지 않는 회원입니다.
+              Headers = []
+         Content type = null
+                 Body =
+        Forwarded URL = null
+       Redirected URL = null
+              Cookies = []
+         */
+        mockMvc.perform(get("/api/users/0").contentType(MediaType.APPLICATION_JSON).content("json"))
+                .andExpect(status().isBadRequest())
+                .andExpect(status().reason(containsString("존재하지 않는 회원입니다.")))
         ;
     }
 
