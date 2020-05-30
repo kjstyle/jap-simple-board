@@ -1,17 +1,13 @@
 package com.kjstyle.jpaboard.domain.posts;
 
+import com.kjstyle.jpaboard.common.BaseTest;
 import com.kjstyle.jpaboard.domain.user.User;
 import com.kjstyle.jpaboard.domain.user.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest
-class PostRepositoryTest {
+class PostRepositoryTest extends BaseTest {
 
     public static final String TEST_TITLE = "코로나제발 쫌 끝나라";
 

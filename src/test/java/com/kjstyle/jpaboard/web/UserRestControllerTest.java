@@ -1,47 +1,21 @@
 package com.kjstyle.jpaboard.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kjstyle.jpaboard.common.BaseMockMvcTest;
 import com.kjstyle.jpaboard.web.dto.UserDto;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.filter.CharacterEncodingFilter;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@ExtendWith(SpringExtension.class)
-@AutoConfigureMockMvc // Junit5에서는 이 어노테이션이 있어야 MockMvc주입에 문제가 안생김 (출처 : https://gofnrk.tistory.com/74)
-@SpringBootTest
-class UserRestControllerTest {
-
-    @Autowired
-    protected MockMvc mockMvc;
-
-    @Autowired
-    private WebApplicationContext ctx;
+class UserRestControllerTest extends BaseMockMvcTest {
 
     @Autowired
     private ObjectMapper objectMapper;
-
-    @BeforeEach
-    public void setup() {
-        // 한글 깨짐 방지 처리
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx)
-                .addFilters(new CharacterEncodingFilter("UTF-8", true))  // 필터 추가
-                .alwaysDo(print())
-                .build();
-    }
 
     @Test
     public void 회원조회() throws Exception {
@@ -63,7 +37,6 @@ class UserRestControllerTest {
                 .andExpect(jsonPath("userId").value("kj"))
                 .andExpect(jsonPath("name").value("이길주"))
                 .andExpect(jsonPath("email").value("kjstyle79@naver.com"))
-                .andDo(print());
         ;
     }
 
@@ -151,7 +124,6 @@ class UserRestControllerTest {
                         .content(content)
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isBadRequest())
-                .andDo(print())
         ;
     }
 
@@ -175,7 +147,7 @@ class UserRestControllerTest {
                 .andExpect(jsonPath("userId").value("kjstyle-1"))
                 .andExpect(jsonPath("name").value("이길주-1"))
                 .andExpect(jsonPath("email").value("kjstyle-1@naver.com"))
-                .andDo(print());
+        ;
 
     }
 
@@ -196,7 +168,7 @@ class UserRestControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(content)
         ).andExpect(status().isBadRequest())
-                .andDo(print());
+        ;
     }
 
     @Test
@@ -206,7 +178,6 @@ class UserRestControllerTest {
                         .queryParam("name", "길주")
         ).andExpect(status().isOk())
                 .andExpect(jsonPath("$.content[0].name").value("이길주"))
-                .andDo(print())
         ;
     }
 }

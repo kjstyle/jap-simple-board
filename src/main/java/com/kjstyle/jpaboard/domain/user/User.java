@@ -12,6 +12,10 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * User Entity
+ * 단순한 CURD의 경우 Dto로 직접 사용
+ */
 @NoArgsConstructor
 @Getter
 @Entity

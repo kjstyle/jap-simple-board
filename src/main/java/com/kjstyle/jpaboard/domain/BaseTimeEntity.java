@@ -10,6 +10,10 @@ import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
+/**
+ * BaseTimeEntity
+ * 모든 Entity에 공통으로 적용되는 속성
+ */
 @Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)

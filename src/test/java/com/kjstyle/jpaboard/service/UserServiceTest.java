@@ -1,18 +1,14 @@
 package com.kjstyle.jpaboard.service;
 
+import com.kjstyle.jpaboard.common.BaseTest;
 import com.kjstyle.jpaboard.domain.user.User;
 import com.kjstyle.jpaboard.exceptions.NoSuchUserException;
 import com.kjstyle.jpaboard.web.dto.UserDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest
-class UserServiceTest {
+class UserServiceTest extends BaseTest {
 
     @Autowired
     private UserService userService;

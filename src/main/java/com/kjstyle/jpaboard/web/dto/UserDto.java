@@ -7,6 +7,10 @@ import lombok.Getter;
 
 import javax.validation.constraints.*;
 
+/**
+ * UserDto
+ * User와 관련된 모든 DTO는 여기에~
+ */
 @Getter
 public class UserDto {
 
