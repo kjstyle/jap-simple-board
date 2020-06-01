@@ -84,7 +84,15 @@ public class UserService {
         return userRepository.save(user).getId();
     }
 
-    public Page<User> findAllNameLike(String name, Pageable pageable) {
-        return userRepository.findUsersByNameContains(name, pageable);
+    public Page<User> findAllNameContains(String searchKeyword, Pageable pageable) {
+        return userRepository.findUsersByNameContains(searchKeyword, pageable);
+    }
+
+    public Page<User> findAllUserIdContains(String searchKeyword, Pageable pageable) {
+        return userRepository.findUserByUserIdContains(searchKeyword, pageable);
+    }
+
+    public Page<User> findAllEmailContains(String searchKeyword, Pageable pageable) {
+        return userRepository.findUserByEmailContains(searchKeyword, pageable);
     }
 }

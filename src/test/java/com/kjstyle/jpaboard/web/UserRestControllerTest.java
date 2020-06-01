@@ -175,10 +175,32 @@ class UserRestControllerTest extends BaseMockMvcTest {
     public void 회원이름으로회원조회테스트() throws Exception {
         mockMvc.perform(
                 get("/api/users").contentType(MediaType.APPLICATION_JSON)
-                        .queryParam("search_type", "NAME")
+                        .queryParam("search_type", "name")
                         .queryParam("search_keyword", "길주")
         ).andExpect(status().isOk())
                 .andExpect(jsonPath("$.content[0].name").value("이길주"))
+        ;
+    }
+
+    @Test
+    public void 회원아이디로회원조회테스트() throws Exception {
+        mockMvc.perform(
+                get("/api/users").contentType(MediaType.APPLICATION_JSON)
+                        .queryParam("search_type", "user_id")
+                        .queryParam("search_keyword", "ejoin312")
+        ).andExpect(status().isOk())
+                .andExpect(jsonPath("$.content[0].name").value("이어진"))
+        ;
+    }
+
+    @Test
+    public void 회원이메일로회원조회테스트() throws Exception {
+        mockMvc.perform(
+                get("/api/users").contentType(MediaType.APPLICATION_JSON)
+                        .queryParam("search_type", "email")
+                        .queryParam("search_keyword", "eojin312")
+        ).andExpect(status().isOk())
+                .andExpect(jsonPath("$.content[0].name").value("이어진"))
         ;
     }
 

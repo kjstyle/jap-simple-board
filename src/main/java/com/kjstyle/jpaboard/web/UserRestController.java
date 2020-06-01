@@ -104,7 +104,16 @@ public class UserRestController extends BaseRestController {
             , @RequestParam(value = "search_type", required = false) SearchType searchType
             , @RequestParam(value = "search_keyword", required = false) String searchKeyword
     ) {
-        log.debug(searchType.toString());
-        return userService.findAllNameLike(searchKeyword, pageable);
+        if (searchType == null || searchKeyword == null) {
+            return userService.findAllWithPage(pageable);
+        } else if (searchType == SearchType.NAME) {
+            return userService.findAllNameContains(searchKeyword, pageable);
+        } else if (searchType == SearchType.USER_ID) {
+            return userService.findAllUserIdContains(searchKeyword, pageable);
+        } else if (searchType == SearchType.EMAIL) {
+            return userService.findAllEmailContains(searchKeyword, pageable);
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "알 수 없는 검색 유형 입니다.");
+        }
     }
 }
