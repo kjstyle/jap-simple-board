@@ -175,9 +175,11 @@ class UserRestControllerTest extends BaseMockMvcTest {
     public void 회원이름으로회원조회테스트() throws Exception {
         mockMvc.perform(
                 get("/api/users").contentType(MediaType.APPLICATION_JSON)
-                        .queryParam("name", "길주")
+                        .queryParam("search_type", "NAME")
+                        .queryParam("search_keyword", "길주")
         ).andExpect(status().isOk())
                 .andExpect(jsonPath("$.content[0].name").value("이길주"))
         ;
     }
+
 }

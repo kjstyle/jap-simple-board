@@ -1,11 +1,13 @@
 package com.kjstyle.jpaboard.web;
 
 import com.kjstyle.jpaboard.domain.user.User;
+import com.kjstyle.jpaboard.enums.SearchType;
 import com.kjstyle.jpaboard.service.UserService;
 import com.kjstyle.jpaboard.web.dto.UserDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -18,6 +20,7 @@ import javax.validation.Valid;
 /**
  * UserRestController
  */
+@Slf4j
 @Api(value = "회원 API", tags = "user")
 @RestController
 @RequiredArgsConstructor
@@ -83,20 +86,25 @@ public class UserRestController extends BaseRestController {
      */
     @ApiOperation("사용자 목록 조회 by pageable")
     @GetMapping("/users.pageable")
-    public Page<User> list(@PageableDefault Pageable pageable) {
+    public Page<User> list(
+            @PageableDefault Pageable pageable
+
+    ) {
         return userService.findAllWithPage(pageable);
     }
 
 
     /**
-     * 사용자 목록 조회 (이름 LIKE검색 가능)
-     * @param name
-     * @param pageable
-     * @return
+     * 사용자 목록 조회 (pageable + 검색)
      */
     @ApiOperation("사용자 목록 조회 by pageable")
     @GetMapping("/users")
-    public Page<User> list(@RequestParam("name") String name, @PageableDefault Pageable pageable) {
-        return userService.findAllNameLike(name, pageable);
+    public Page<User> list(
+            @PageableDefault Pageable pageable
+            , @RequestParam(value = "search_type", required = false) SearchType searchType
+            , @RequestParam(value = "search_keyword", required = false) String searchKeyword
+    ) {
+        log.debug(searchType.toString());
+        return userService.findAllNameLike(searchKeyword, pageable);
     }
 }
