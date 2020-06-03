@@ -1,12 +1,13 @@
 package com.kjstyle.jpaboard.web;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -21,6 +22,6 @@ class HelloControllerTest {
         String actual = this.restTemplate.getForObject("/hello/world", String.class);
 
         // then
-        Assertions.assertEquals("hello world", actual);
+        assertEquals("hello world", actual);
     }
 }

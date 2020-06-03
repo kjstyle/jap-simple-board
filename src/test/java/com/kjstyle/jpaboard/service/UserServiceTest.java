@@ -4,9 +4,10 @@ import com.kjstyle.jpaboard.common.BaseTest;
 import com.kjstyle.jpaboard.domain.user.User;
 import com.kjstyle.jpaboard.exceptions.NoSuchUserException;
 import com.kjstyle.jpaboard.web.dto.UserDto;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class UserServiceTest extends BaseTest {
 
@@ -23,7 +24,7 @@ class UserServiceTest extends BaseTest {
         User user = userService.findById(1L).orElseThrow(() -> new Exception());
 
         // then
-        Assertions.assertEquals(user.isDeleted(), true);
+        assertEquals(user.isDeleted(), true);
     }
 
     @Test
@@ -38,6 +39,6 @@ class UserServiceTest extends BaseTest {
         );
 
         User user = userService.findById(id).orElseThrow(() -> new NoSuchUserException());
-        Assertions.assertEquals("kjstye-service-insert", user.getUserId());
+        assertEquals("kjstye-service-insert", user.getUserId());
     }
 }

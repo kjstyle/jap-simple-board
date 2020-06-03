@@ -2,9 +2,11 @@ package com.kjstyle.jpaboard.domain.user;
 
 import com.kjstyle.jpaboard.common.BaseTest;
 import com.kjstyle.jpaboard.exceptions.NoSuchUserException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class UserRepositoryTest extends BaseTest {
 
@@ -24,8 +26,8 @@ public class UserRepositoryTest extends BaseTest {
         User kj = userRepository.findUserByUserId(TEST_USER_ID).orElseThrow(() -> new NoSuchUserException());
 
         // then
-        Assertions.assertEquals(kj.getUserId(), TEST_USER_ID);
-        Assertions.assertEquals(kj.getEmail(), TEST_EMAIL);
-        Assertions.assertNotNull(kj.getCreatedDate());
+        assertEquals(kj.getUserId(), TEST_USER_ID);
+        assertEquals(kj.getEmail(), TEST_EMAIL);
+        assertNotNull(kj.getCreatedDate());
     }
 }
