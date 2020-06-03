@@ -4,10 +4,12 @@ import com.kjstyle.jpaboard.common.BaseTest;
 import com.kjstyle.jpaboard.exceptions.NoSuchUserException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+@Transactional
 public class UserRepositoryTest extends BaseTest {
 
     public static final String TEST_USER_ID = "kjstyle-test01";
