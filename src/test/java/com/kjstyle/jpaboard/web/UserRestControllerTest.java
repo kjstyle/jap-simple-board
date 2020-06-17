@@ -6,6 +6,7 @@ import com.kjstyle.jpaboard.web.dto.UserDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.ResultActions;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -31,8 +32,11 @@ class UserRestControllerTest extends BaseMockMvcTest {
             "email": "kjstyle79@naver.com"
         }
          */
-        mockMvc.perform(get("/api/users/1").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
+        // when
+        final ResultActions actions = mockMvc.perform(get("/api/users/1").contentType(MediaType.APPLICATION_JSON));
+
+        // then
+        actions.andExpect(status().isOk())
                 .andExpect(jsonPath("userNo").value(1L))
                 .andExpect(jsonPath("userId").value("kj"))
                 .andExpect(jsonPath("name").value("이길주"))
@@ -71,6 +75,7 @@ class UserRestControllerTest extends BaseMockMvcTest {
 
     @Test
     public void 회원신규등록API테스트() throws Exception {
+        // given
         String content = objectMapper.writeValueAsString(
                 UserDto.Create.builder()
                         .userId("kjstyle2")
@@ -79,11 +84,15 @@ class UserRestControllerTest extends BaseMockMvcTest {
                         .build()
         );
 
-        mockMvc.perform(
+        // when
+        final ResultActions actions = mockMvc.perform(
                 post("/api/users")
                         .content(content)
                         .contentType(MediaType.APPLICATION_JSON)
-        ).andExpect(status().isOk())
+        );
+
+        // then
+        actions.andExpect(status().isOk())
                 .andExpect(content().string("3"))
                 .andDo(print())
         ;
@@ -91,6 +100,8 @@ class UserRestControllerTest extends BaseMockMvcTest {
 
     @Test
     public void 회원신규등록API_유효성체크_짧은_ID_테스트() throws Exception {
+
+        // given
         String content = objectMapper.writeValueAsString(
                 UserDto.Create.builder()
                         .userId("kj")
@@ -99,11 +110,15 @@ class UserRestControllerTest extends BaseMockMvcTest {
                         .build()
         );
 
-        mockMvc.perform(
+        // when
+        final ResultActions actions = mockMvc.perform(
                 post("/api/users")
                         .content(content)
                         .contentType(MediaType.APPLICATION_JSON)
-        ).andExpect(status().isBadRequest())
+        );
+
+        // then
+        actions.andExpect(status().isBadRequest())
                 .andDo(print())
         ;
     }
