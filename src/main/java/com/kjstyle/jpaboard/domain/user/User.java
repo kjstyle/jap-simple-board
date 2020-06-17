@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,6 +61,17 @@ public class User extends BaseTimeEntity {
         this.name = name;
         this.email = email;
         this.isDeleted = false;
+    }
+
+    @Builder
+    protected User(Long id, String userId, String name, String email, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+        this.id = id;
+        this.userId = userId;
+        this.name = name;
+        this.email = email;
+        this.isDeleted = false;
+        super.setCreatedDate(createdDate);
+        super.setModifiedDate(modifiedDate);
     }
 
     public void deleted() {

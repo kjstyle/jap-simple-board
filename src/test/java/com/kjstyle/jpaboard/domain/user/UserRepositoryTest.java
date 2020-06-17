@@ -1,6 +1,6 @@
 package com.kjstyle.jpaboard.domain.user;
 
-import com.kjstyle.jpaboard.common.BaseTest;
+import com.kjstyle.jpaboard.common.BaseJpaTest;
 import com.kjstyle.jpaboard.exceptions.NoSuchUserException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @Transactional
-public class UserRepositoryTest extends BaseTest {
+public class UserRepositoryTest extends BaseJpaTest {
 
     public static final String TEST_USER_ID = "kjstyle-test01";
     public static final String TEST_EMAIL = "kjstyle-test01@naver.com";
