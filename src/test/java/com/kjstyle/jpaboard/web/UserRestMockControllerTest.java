@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class UserRestMockControllerTest extends BaseMockMvcTest {
 
-    @MockBean
+    @MockBean // since springboot 1.4
     private UserService userService;
 
     private User mockUser;
@@ -27,14 +27,13 @@ public class UserRestMockControllerTest extends BaseMockMvcTest {
     @BeforeEach
     void beforeEach() {
         mockUser = User.builder().userId("kj").email("kj@naver.com").id(1L).name("이길주").createdDate(LocalDateTime.now()).build();
-
     }
 
     @Test
     public void 회원조회테스트() throws Exception {
-        // given
 
-        given(userService.findById(1L)).willReturn(java.util.Optional.ofNullable(mockUser));
+        // given
+        given(userService.findById(1L)).willReturn(mockUser);
 
 
         // when
@@ -51,7 +50,7 @@ public class UserRestMockControllerTest extends BaseMockMvcTest {
     public void 회원조회테스트_when으로해보기() throws Exception {
 
         // given
-        when(userService.findById(1L)).thenReturn(java.util.Optional.ofNullable(mockUser));
+        when(userService.findById(1L)).thenReturn(mockUser);
 
 
         // when

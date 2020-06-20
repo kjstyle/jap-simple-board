@@ -2,6 +2,7 @@ package com.kjstyle.jpaboard.service;
 
 import com.kjstyle.jpaboard.domain.user.User;
 import com.kjstyle.jpaboard.domain.user.UserRepository;
+import com.kjstyle.jpaboard.exceptions.NoSuchUserException;
 import com.kjstyle.jpaboard.web.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -12,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * UserService
@@ -66,8 +66,8 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> findById(long id) {
-        return userRepository.findById(id);
+    public User findById(long id) {
+        return userRepository.findById(id).orElseThrow(() -> new NoSuchUserException());
     }
 
     /**

@@ -4,7 +4,6 @@ package com.kjstyle.jpaboard.service;
 import com.kjstyle.jpaboard.common.BaseTest;
 import com.kjstyle.jpaboard.domain.user.User;
 import com.kjstyle.jpaboard.domain.user.UserRepository;
-import com.kjstyle.jpaboard.exceptions.NoSuchUserException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +14,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 
 class UserServiceMockTest extends BaseTest {
+
     @Mock
     private UserRepository userRepository;
 
@@ -35,7 +35,7 @@ class UserServiceMockTest extends BaseTest {
         // beforeEach에서 수행
 
         // when
-        User user = userService.findById(1L).orElseThrow(() -> new NoSuchUserException());
+        User user = userService.findById(1L);
 
         // then
         Assertions.assertEquals(mockUser.getEmail(), user.getEmail());

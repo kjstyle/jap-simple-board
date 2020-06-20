@@ -2,6 +2,7 @@ package com.kjstyle.jpaboard.web;
 
 import com.kjstyle.jpaboard.domain.user.User;
 import com.kjstyle.jpaboard.enums.SearchType;
+import com.kjstyle.jpaboard.exceptions.NoSuchUserException;
 import com.kjstyle.jpaboard.service.UserService;
 import com.kjstyle.jpaboard.web.dto.UserDto;
 import io.swagger.annotations.Api;
@@ -61,9 +62,11 @@ public class UserRestController extends BaseRestController {
     @ApiOperation("사용자 단건 조회 byId")
     @GetMapping("/users/{id}")
     public User getUserById(@PathVariable("id") Long id) {
-        return userService.findById(id).orElseThrow(()
-                -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "존재하지 않는 회원입니다.") // ResponseStatusException since spring 5.0
-        );
+        try {
+            return userService.findById(id);
+        } catch (NoSuchUserException nsue) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, nsue.getMessage());
+        }
     }
 
     /**
