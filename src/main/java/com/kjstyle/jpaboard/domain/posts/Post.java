@@ -1,5 +1,6 @@
 package com.kjstyle.jpaboard.domain.posts;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.kjstyle.jpaboard.domain.BaseTimeEntity;
 import com.kjstyle.jpaboard.domain.board.Board;
 import com.kjstyle.jpaboard.domain.user.User;
@@ -12,6 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Entity
+
 public class Post extends BaseTimeEntity {
 
     @Id
@@ -20,7 +22,9 @@ public class Post extends BaseTimeEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_no", insertable = false)
+    @JoinColumn(name = "user_no")
+    @JsonIgnoreProperties({"hibernateLazyInitializer"})
+    // https://blogdeveloperspot.blogspot.com/2018/12/spring-boot-2-jpa-no-serializer-found.html : 자세한 원인 파악 필요
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -33,14 +37,10 @@ public class Post extends BaseTimeEntity {
     @Column(nullable = false)
     private String content;
 
-    @Column(nullable = false)
-    private String author;
-
     @Builder
-    public Post(User user, String title, String content, String author) {
+    public Post(User user, String title, String content) {
         this.user = user;
         this.title = title;
         this.content = content;
-        this.author = author;
     }
 }

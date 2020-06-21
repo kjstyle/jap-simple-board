@@ -9,6 +9,7 @@ import java.util.List;
 @Repository
 @RequiredArgsConstructor
 public class PostRepository {
+
     private final EntityManager em;
 
     public Post save(Post post) {

@@ -1,9 +1,9 @@
 package com.kjstyle.jpaboard.web;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class PostController {
 

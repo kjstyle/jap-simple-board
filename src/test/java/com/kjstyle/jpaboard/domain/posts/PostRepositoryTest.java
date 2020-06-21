@@ -30,7 +30,6 @@ class PostRepositoryTest extends BaseTest {
         Post post = postRepository.save(Post.builder()
                 .title(TEST_TITLE)
                 .content("한달만 더 참자")
-                .author(user.getUserId())
                 .user(user)
                 .build());
 
@@ -48,7 +47,6 @@ class PostRepositoryTest extends BaseTest {
         postRepository.save(Post.builder()
                 .title("첫글")
                 .content("한달만 더 참자")
-                .author(user.getUserId())
                 .user(user)
                 .build());
 
@@ -58,13 +56,11 @@ class PostRepositoryTest extends BaseTest {
         postRepository.save(Post.builder()
                 .title("두번째 글")
                 .content("잘하자")
-                .author(user2.getUserId())
                 .user(user2)
                 .build());
         // when
         List<Post> posts = postRepository.findAll();
-        Post post = postRepository.findById(1L);
-        Assertions.assertNotNull(post.getUser());
+        Assertions.assertNotNull(posts.get(0).getUser());
 
         // then
         Assertions.assertEquals("첫글", posts.get(0).getTitle());
