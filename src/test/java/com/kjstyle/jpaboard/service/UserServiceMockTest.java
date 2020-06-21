@@ -15,10 +15,10 @@ import static org.mockito.BDDMockito.given;
 
 class UserServiceMockTest extends BaseTest {
 
-    @Mock
+    @Mock // 테스트할 대상 클래스 내에서 사용되는 의존성에 대해 가짜로 대치시킴
     private UserRepository userRepository;
 
-    @InjectMocks
+    @InjectMocks // 테스트할 대상 클래스
     private UserService userService;
 
     private User mockUser;
