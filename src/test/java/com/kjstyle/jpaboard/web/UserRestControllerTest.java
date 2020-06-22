@@ -37,10 +37,12 @@ class UserRestControllerTest extends BaseMockMvcTest {
 
         // then
         actions.andExpect(status().isOk())
-                .andExpect(jsonPath("userNo").value(1L))
-                .andExpect(jsonPath("userId").value("kj"))
-                .andExpect(jsonPath("name").value("이길주"))
-                .andExpect(jsonPath("email").value("kjstyle79@naver.com"))
+                .andExpect(jsonPath("$.userNo").value(1L))
+                .andExpect(jsonPath("$.userNo").isNumber())
+                .andExpect(jsonPath("$.userId").value("kj"))
+                .andExpect(jsonPath("$.name").value("이길주"))
+                .andExpect(jsonPath("$.email").value("kjstyle79@naver.com"))
+
         ;
     }
 
@@ -94,7 +96,6 @@ class UserRestControllerTest extends BaseMockMvcTest {
         // then
         actions.andExpect(status().isOk())
                 .andExpect(content().string("3"))
-                .andDo(print())
         ;
     }
 

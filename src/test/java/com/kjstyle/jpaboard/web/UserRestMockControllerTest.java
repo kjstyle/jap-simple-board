@@ -26,7 +26,13 @@ public class UserRestMockControllerTest extends BaseMockMvcTest {
 
     @BeforeEach
     void beforeEach() {
-        mockUser = User.builder().userId("kj").email("kj@naver.com").id(1L).name("이길주").createdDate(LocalDateTime.now()).build();
+        mockUser = User.builder()
+                .userId("kj")
+                .email("kj@naver.com")
+                .id(1L)
+                .name("이길주")
+                .createdDate(LocalDateTime.now())
+                .build();
     }
 
     @Test
@@ -34,7 +40,6 @@ public class UserRestMockControllerTest extends BaseMockMvcTest {
 
         // given
         given(userService.findById(1L)).willReturn(mockUser);
-
 
         // when
         final ResultActions actions = mockMvc.perform(get("/api/users/1").contentType(MediaType.APPLICATION_JSON));
@@ -51,7 +56,6 @@ public class UserRestMockControllerTest extends BaseMockMvcTest {
 
         // given
         when(userService.findById(1L)).thenReturn(mockUser);
-
 
         // when
         final ResultActions actions = mockMvc.perform(get("/api/users/1").contentType(MediaType.APPLICATION_JSON));
